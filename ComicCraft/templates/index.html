@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ComicCraft — AI Comic Creator</title>
+  <link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}">
+</head>
+<body class="hero-bg">
+  <main class="container narrow">
+    <section class="card">
+      <div class="brand">✦ COMICCRAFT</div>
+      <h1>Turn an idea into a comic.</h1>
+      <p class="muted">Create a five-panel story with AI narration, dialogue, artwork, and PDF export.</p>
+
+      {% if error %}
+      <div class="alert">{{ error }}</div>
+      {% endif %}
+
+      <form action="/generate" method="post" onsubmit="showLoading()">
+        <label>Story Prompt
+          <textarea name="story_prompt" required maxlength="2000"
+            placeholder="A brave fox exploring an enchanted forest..."></textarea>
+        </label>
+
+        <div class="grid-2">
+          <label>Main Character Name
+            <input name="character_name" required maxlength="80" placeholder="Milo">
+          </label>
+          <label>Setting
+            <input name="setting" required maxlength="120" placeholder="Enchanted forest">
+          </label>
+        </div>
+
+        <div class="grid-2">
+          <label>Story Tone
+            <select name="tone">
+              <option>light-hearted</option>
+              <option>dramatic</option>
+              <option>poetic</option>
+              <option>funny</option>
+              <option>adventurous</option>
+            </select>
+          </label>
+          <label>Art Style
+            <select name="art_style">
+              <option>comic book</option>
+              <option>anime</option>
+              <option>pixel art</option>
+              <option>realistic</option>
+              <option>watercolor</option>
+            </select>
+          </label>
+        </div>
+
+        <button id="generateBtn" type="submit">Create My Comic ✨</button>
+        <p id="loading" class="loading hidden">Creating your story and panels… This can take a few minutes.</p>
+      </form>
+    </section>
+  </main>
+
+  <script>
+    function showLoading() {
+      document.getElementById("generateBtn").disabled = true;
+      document.getElementById("generateBtn").textContent = "Generating…";
+      document.getElementById("loading").classList.remove("hidden");
+    }
+  </script>
+</body>
+</html>
